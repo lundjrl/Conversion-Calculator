@@ -1,6 +1,7 @@
 package com.example.calculatorconversion;
 
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,13 +37,14 @@ public class MainActivity extends AppCompatActivity {
     clearButton.setOnClickListener(e -> {
       textFieldFrom.setText("");
       textFieldTo.setText("");
+      dismissKeyboard();
     });
 
     textFieldFrom.setOnClickListener(e ->
-      textFieldTo.setText(""));
+        textFieldTo.setText(""));
 
     textFieldTo.setOnClickListener(e ->
-      textFieldFrom.setText(""));
+        textFieldFrom.setText(""));
 
     calculateButton.setOnClickListener(e -> {
       double num, convertValue;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         convertValue = conversion.getConversionMap().get(currentCalc).get(key);
         textFieldTo.setText(Double.toString(num * convertValue));
 
-      } else if (!textFieldTo.getText().toString().equals("")){
+      } else if (!textFieldTo.getText().toString().equals("")) {
 
         String key = toUnitText.getText().toString() + fromUnitText.getText().toString();
         num = Double.parseDouble(textFieldTo.getText().toString());
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         textFieldFrom.setText(Double.toString(num * convertValue));
       }
 
+      dismissKeyboard();
     });
 
     modeButton.setOnClickListener(e -> {
@@ -79,9 +82,21 @@ public class MainActivity extends AppCompatActivity {
           fromUnitText.setText("Yards");
           toUnitText.setText("Meters");
       }
+
+      dismissKeyboard();
     });
 
 
+  }
+
+  // From https://stackoverflow.com/questions/3400028/close-virtual-keyboard-on-button-press
+  void dismissKeyboard() {
+    try {
+      InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    } catch (Exception e) {
+      // keyboard already hidden
+    }
   }
 
 }
