@@ -8,4 +8,26 @@
     tools:context=".Settings"
     tools:showIn="@layout/activity_settings">
 
+  <TextView
+    android:id="@+id/textView"
+    android:layout_width="49dp"
+    android:layout_height="21dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginLeft="8dp"
+    android:text="Yards"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+  <TextView
+    android:id="@+id/textView2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="60dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginLeft="8dp"
+    android:text="Meters"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

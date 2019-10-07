@@ -1,6 +1,10 @@
 package com.example.calculatorconversion;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -99,8 +103,22 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu){
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.navbar, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()){
+      case R.id.settings:
+            Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
+            startActivity (switchToSettings);
+    }
+    return super.onOptionsItemSelected(item);
+  }
 }
 
 
-//    Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
-//    startActivity (switchToSettings);
