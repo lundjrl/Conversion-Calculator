@@ -1,6 +1,7 @@
 package com.example.calculatorconversion;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,24 +41,30 @@ public class MainActivity extends AppCompatActivity {
       dismissKeyboard();
     });
 
-    textFieldFrom.setOnClickListener(e ->
-        textFieldTo.setText(""));
+    textFieldFrom.setOnFocusChangeListener((View v, boolean hasFocus) -> {
+      if (hasFocus) {
+        textFieldTo.setText("");
+      }
+    });
 
-    textFieldTo.setOnClickListener(e ->
-        textFieldFrom.setText(""));
+    textFieldTo.setOnFocusChangeListener((View v, boolean hasFocus) -> {
+      if (hasFocus) {
+        textFieldFrom.setText("");
+      }
+    });
 
     calculateButton.setOnClickListener(e -> {
       double num, convertValue;
 
       // See if from focus
-      if (!textFieldFrom.getText().toString().equals("")) {
+      if (textFieldFrom.hasFocus() && !textFieldFrom.getText().toString().equals("")) {
 
         String key = fromUnitText.getText().toString() + toUnitText.getText().toString();
         num = Double.parseDouble(textFieldFrom.getText().toString());
         convertValue = conversion.getConversionMap().get(currentCalc).get(key);
         textFieldTo.setText(Double.toString(num * convertValue));
 
-      } else if (!textFieldTo.getText().toString().equals("")) {
+      } else if (textFieldTo.hasFocus() && !textFieldTo.getText().toString().equals("")) {
 
         String key = toUnitText.getText().toString() + fromUnitText.getText().toString();
         num = Double.parseDouble(textFieldTo.getText().toString());
@@ -100,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
 }
-
 
 //    Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
 //    startActivity (switchToSettings);
