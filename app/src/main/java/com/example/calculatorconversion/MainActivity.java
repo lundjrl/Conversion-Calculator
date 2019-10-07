@@ -20,18 +20,18 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     // Fields
-    TextView textFieldFrom = (TextView) findViewById(R.id.textFieldFrom);
-    TextView textFieldTo = (TextView) findViewById(R.id.textFieldTo);
+    TextView textFieldFrom = findViewById(R.id.textFieldFrom);
+    TextView textFieldTo = findViewById(R.id.textFieldTo);
 
     // Units
-    TextView converterUnit = (TextView) findViewById(R.id.converterUnit);
-    TextView fromUnitText = (TextView) findViewById(R.id.fromUnitText);
-    TextView toUnitText = (TextView) findViewById(R.id.toUnitText);
+    TextView converterUnit = findViewById(R.id.converterUnit);
+    TextView fromUnitText = findViewById(R.id.fromUnitText);
+    TextView toUnitText = findViewById(R.id.toUnitText);
 
     // Buttons
-    Button calculateButton = (Button) findViewById(R.id.calculateButton);
-    Button clearButton = (Button) findViewById(R.id.clearButton);
-    Button modeButton = (Button) findViewById(R.id.modeButton);
+    Button calculateButton = findViewById(R.id.calculateButton);
+    Button clearButton = findViewById(R.id.clearButton);
+    Button modeButton = findViewById(R.id.modeButton);
 
     clearButton.setOnClickListener(e -> {
       textFieldFrom.setText("");
