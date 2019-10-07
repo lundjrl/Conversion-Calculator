@@ -1,8 +1,11 @@
 package com.example.calculatorconversion;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Button clearButton = (Button) findViewById(R.id.clearButton);
         Button modeButton = (Button) findViewById(R.id.modeButton);
 
+
         clearButton.setOnClickListener( e -> {
             textFieldFrom.setText("");
             textFieldTo.setText("");
@@ -35,8 +39,16 @@ public class MainActivity extends AppCompatActivity {
             double toNum = Double.parseDouble(textFieldTo.getText().toString());
         });
 
+        modeButton.setOnClickListener( e -> {
+
+        });
+
 
 
     }
 
 }
+
+
+//    Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
+//    startActivity (switchToSettings);
