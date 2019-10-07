@@ -1,51 +1,103 @@
 package com.example.calculatorconversion;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+  final Conversion conversion = new Conversion();
 
-        // Fields
-        TextView textFieldFrom = (TextView) findViewById(R.id.textFieldFrom);
-        TextView textFieldTo = (TextView) findViewById(R.id.textFieldTo);
+  // Default is length
+  String currentCalc = "length";
+  static final String VOLUME = "volume";
+  static final String LENGTH = "length";
 
-        // Units
-        TextView converterUnit = (TextView) findViewById(R.id.converterUnit);
-        TextView fromUnitText = (TextView) findViewById(R.id.fromUnitText);
-        TextView toUnitText = (TextView) findViewById(R.id.toUnitText);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-        // Buttons
-        Button calculateButton = (Button) findViewById(R.id.calculateButton);
-        Button clearButton = (Button) findViewById(R.id.clearButton);
-        Button modeButton = (Button) findViewById(R.id.modeButton);
+    // Fields
+    TextView textFieldFrom = findViewById(R.id.textFieldFrom);
+    TextView textFieldTo = findViewById(R.id.textFieldTo);
+
+    // Units
+    TextView converterUnit = findViewById(R.id.converterUnit);
+    TextView fromUnitText = findViewById(R.id.fromUnitText);
+    TextView toUnitText = findViewById(R.id.toUnitText);
+
+    // Buttons
+    Button calculateButton = findViewById(R.id.calculateButton);
+    Button clearButton = findViewById(R.id.clearButton);
+    Button modeButton = findViewById(R.id.modeButton);
+
+    clearButton.setOnClickListener(e -> {
+      textFieldFrom.setText("");
+      textFieldTo.setText("");
+      dismissKeyboard();
+    });
+
+    textFieldFrom.setOnClickListener(e ->
+        textFieldTo.setText(""));
+
+    textFieldTo.setOnClickListener(e ->
+        textFieldFrom.setText(""));
+
+    calculateButton.setOnClickListener(e -> {
+      double num, convertValue;
+
+      // See if from focus
+      if (!textFieldFrom.getText().toString().equals("")) {
+
+        String key = fromUnitText.getText().toString() + toUnitText.getText().toString();
+        num = Double.parseDouble(textFieldFrom.getText().toString());
+        convertValue = conversion.getConversionMap().get(currentCalc).get(key);
+        textFieldTo.setText(Double.toString(num * convertValue));
+
+      } else if (!textFieldTo.getText().toString().equals("")) {
+
+        String key = toUnitText.getText().toString() + fromUnitText.getText().toString();
+        num = Double.parseDouble(textFieldTo.getText().toString());
+        convertValue = conversion.getConversionMap().get(currentCalc).get(key);
+        textFieldFrom.setText(Double.toString(num * convertValue));
+      }
+
+      dismissKeyboard();
+    });
+
+    modeButton.setOnClickListener(e -> {
+      switch (currentCalc) {
+        case LENGTH:
+          currentCalc = VOLUME;
+          converterUnit.setText("Volume Converter");
+          fromUnitText.setText("Gallons");
+          toUnitText.setText("Liters");
+          break;
+        case VOLUME:
+          currentCalc = LENGTH;
+          converterUnit.setText("Length Converter");
+          fromUnitText.setText("Yards");
+          toUnitText.setText("Meters");
+      }
+
+      dismissKeyboard();
+    });
 
 
-        clearButton.setOnClickListener( e -> {
-            textFieldFrom.setText("");
-            textFieldTo.setText("");
-        });
+  }
 
-        calculateButton.setOnClickListener( e -> {
-            double fromNum = Double.parseDouble(textFieldFrom.getText().toString());
-            double toNum = Double.parseDouble(textFieldTo.getText().toString());
-        });
-
-        modeButton.setOnClickListener( e -> {
-
-        });
-
-
-
+  // From https://stackoverflow.com/questions/3400028/close-virtual-keyboard-on-button-press
+  void dismissKeyboard() {
+    try {
+      InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    } catch (Exception e) {
+      // keyboard already hidden
     }
+  }
 
 }
 
