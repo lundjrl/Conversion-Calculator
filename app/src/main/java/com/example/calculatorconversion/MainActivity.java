@@ -25,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
   ArrayList<String> lengthList;
   ArrayList<String> volumeList;
 
+  TextView toUnitText;
+  TextView converterUnit;
+  TextView fromUnitText;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -35,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     TextView textFieldTo = findViewById(R.id.textFieldTo);
 
     // Units
-    TextView converterUnit = findViewById(R.id.converterUnit);
-    TextView fromUnitText = findViewById(R.id.fromUnitText);
-    TextView toUnitText = findViewById(R.id.toUnitText);
+    converterUnit = findViewById(R.id.converterUnit);
+    fromUnitText = findViewById(R.id.toUnitText);
+    toUnitText = findViewById(R.id.fromUnitText);
 
     // Buttons
     Button calculateButton = findViewById(R.id.calculateButton);
@@ -109,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
       dismissKeyboard();
     });
 
-
   }
 
   // From https://stackoverflow.com/questions/3400028/close-virtual-keyboard-on-button-press
@@ -130,14 +133,24 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.settings:
-        Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
-        startActivity(switchToSettings);
+    public boolean onOptionsItemSelected(MenuItem settingsItem) {
+      switch (settingsItem.getItemId()) {
+        case R.id.settings:
+          Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
+          switchToSettings.putExtra("toUnitText", toUnitText.getText());
+          switchToSettings.putExtra("fromUnitText", fromUnitText.getText());
+          switch (currentCalc){
+            case VOLUME:
+              switchToSettings.putExtra("spinnerValues", volumeList);
+              break;
+            case LENGTH:
+              switchToSettings.putExtra("spinnerValues", lengthList);
+          }
+
+          startActivity(switchToSettings);
+      }
+      return super.onOptionsItemSelected(settingsItem);
     }
-    return super.onOptionsItemSelected(item);
-  }
 }
 
 

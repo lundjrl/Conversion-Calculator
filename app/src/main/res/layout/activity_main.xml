@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toLabel" />
 
     <TextView
-        android:id="@+id/fromUnitText"
+        android:id="@+id/toUnitText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/fromLabel" />
 
     <TextView
-        android:id="@+id/toUnitText"
+        android:id="@+id/fromUnitText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
