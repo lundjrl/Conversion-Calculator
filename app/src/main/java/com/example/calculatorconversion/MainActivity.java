@@ -18,12 +18,9 @@ public class MainActivity extends AppCompatActivity {
   final Conversion conversion = new Conversion();
 
   // Default is length
-  String currentCalc = "length";
-  static final String VOLUME = "volume";
-  static final String LENGTH = "length";
-
-  ArrayList<String> lengthList;
-  ArrayList<String> volumeList;
+  String currentCalc = "LENGTH";
+  static final String VOLUME = "VOLUME";
+  static final String LENGTH = "LENGTH";
 
   TextView toUnitText;
   TextView converterUnit;
@@ -50,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Menu item
     MenuItem settingsItem = findViewById(R.id.settings);
-
-    // Add lists for length and volume
-    lengthList = new ArrayList<>(Arrays.asList("Yards", "Meters", "Miles"));
-    volumeList = new ArrayList<>(Arrays.asList("Liters", "Gallons", "Quarts"));
 
     clearButton.setOnClickListener(e -> {
       textFieldFrom.setText("");
@@ -139,13 +132,8 @@ public class MainActivity extends AppCompatActivity {
           Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
           switchToSettings.putExtra("toUnitText", toUnitText.getText());
           switchToSettings.putExtra("fromUnitText", fromUnitText.getText());
-          switch (currentCalc){
-            case VOLUME:
-              switchToSettings.putExtra("spinnerValues", volumeList);
-              break;
-            case LENGTH:
-              switchToSettings.putExtra("spinnerValues", lengthList);
-          }
+          switchToSettings.putExtra("currentCalc", currentCalc);
+
 
           startActivity(switchToSettings);
       }

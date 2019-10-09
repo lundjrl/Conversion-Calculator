@@ -70,32 +70,32 @@
         app:layout_constraintTop_toBottomOf="@+id/toLabel" />
 
     <TextView
-        android:id="@+id/toUnitText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="27dp"
-        android:text="Yards"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toEndOf="@+id/textFieldFrom"
-        app:layout_constraintTop_toBottomOf="@+id/fromLabel" />
+      android:id="@+id/toUnitText"
+      android:layout_width="70dp"
+      android:layout_height="24dp"
+      android:layout_marginTop="27dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginLeft="16dp"
+      android:text="Yards"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.16"
+      app:layout_constraintStart_toEndOf="@+id/textFieldFrom"
+      app:layout_constraintTop_toBottomOf="@+id/fromLabel" />
 
     <TextView
-        android:id="@+id/fromUnitText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="27dp"
-        android:text="Meters"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toEndOf="@+id/textFieldTo"
-        app:layout_constraintTop_toBottomOf="@+id/toLabel" />
+      android:id="@+id/fromUnitText"
+      android:layout_width="70dp"
+      android:layout_height="24dp"
+      android:layout_marginTop="27dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginLeft="16dp"
+      android:text="Meters"
+      android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.16"
+      app:layout_constraintStart_toEndOf="@+id/textFieldTo"
+      app:layout_constraintTop_toBottomOf="@+id/toLabel" />
 
     <Button
         android:id="@+id/calculateButton"
