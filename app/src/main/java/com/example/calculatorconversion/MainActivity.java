@@ -3,13 +3,15 @@ package com.example.calculatorconversion;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
   String currentCalc = "length";
   static final String VOLUME = "volume";
   static final String LENGTH = "length";
+
+  ArrayList<String> lengthList;
+  ArrayList<String> volumeList;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
     Button calculateButton = findViewById(R.id.calculateButton);
     Button clearButton = findViewById(R.id.clearButton);
     Button modeButton = findViewById(R.id.modeButton);
+
+    // Menu item
+    MenuItem settingsItem = findViewById(R.id.settings);
+
+    // Add lists for length and volume
+    lengthList = new ArrayList<>(Arrays.asList("Yards", "Meters", "Miles"));
+    volumeList = new ArrayList<>(Arrays.asList("Liters", "Gallons", "Quarts"));
 
     clearButton.setOnClickListener(e -> {
       textFieldFrom.setText("");
@@ -111,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onCreateOptionsMenu(Menu menu){
+  public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.navbar, menu);
     return true;
@@ -119,10 +131,10 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()){
+    switch (item.getItemId()) {
       case R.id.settings:
-            Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
-            startActivity (switchToSettings);
+        Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
+        startActivity(switchToSettings);
     }
     return super.onOptionsItemSelected(item);
   }
