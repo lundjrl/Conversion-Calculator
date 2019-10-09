@@ -21,12 +21,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_settings" />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-      android:id="@+id/floatingActionButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:clickable="true"
-      app:srcCompat="@drawable/ic_check_circle_black_24dp"
-      android:focusable="true" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
