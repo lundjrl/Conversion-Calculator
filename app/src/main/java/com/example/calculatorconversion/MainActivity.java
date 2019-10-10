@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Calculator Conversion app by Zachary Thomas and James Lund
+ */
+
 public class MainActivity extends AppCompatActivity {
 
   final Conversion conversion = new Conversion();
@@ -23,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
   TextView toUnitText;
   TextView converterUnit;
   TextView fromUnitText;
+
+  public static final int SETTINGS = 1;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -137,8 +143,19 @@ public class MainActivity extends AppCompatActivity {
         switchToSettings.putExtra("toUnitTextSettings", toUnitText.getText());
         switchToSettings.putExtra("currentCalc", currentCalc);
 
-        startActivity(switchToSettings);
+        startActivityForResult(switchToSettings, SETTINGS);
     }
     return super.onOptionsItemSelected(settingsItem);
   }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode == SETTINGS) {
+
+      fromUnitText.setText(data.getStringExtra("fromUnitText"));
+      toUnitText.setText(data.getStringExtra("toUnitText"));
+    }
+
+  }
+
 }

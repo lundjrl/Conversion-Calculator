@@ -13,6 +13,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Calculator Conversion app by Zachary Thomas and James Lund
+ */
+
 public class Settings extends AppCompatActivity {
 
   Spinner fromSpinner;
@@ -127,7 +131,8 @@ public class Settings extends AppCompatActivity {
       switchToMain.putExtra("fromUnitText", fromUnitTextSettings.getText());
       switchToMain.putExtra("currentCalc", currentCalc);
 
-      startActivity(switchToMain);
+      setResult(MainActivity.SETTINGS, switchToMain);
+      finish();
     });
 
   }
