@@ -10,8 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,8 +43,13 @@ public class MainActivity extends AppCompatActivity {
     Button clearButton = findViewById(R.id.clearButton);
     Button modeButton = findViewById(R.id.modeButton);
 
-    // Menu item
-    MenuItem settingsItem = findViewById(R.id.settings);
+    Intent payload = getIntent();
+    if (payload.hasExtra("fromUnitText")) {
+      fromUnitText.setText(payload.getStringExtra("fromUnitText"));
+    }
+    if (payload.hasExtra("toUnitText")) {
+      toUnitText.setText(payload.getStringExtra("toUnitText"));
+    }
 
     clearButton.setOnClickListener(e -> {
       textFieldFrom.setText("");
@@ -126,19 +129,16 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-    public boolean onOptionsItemSelected(MenuItem settingsItem) {
-      switch (settingsItem.getItemId()) {
-        case R.id.settings:
-          Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
-          switchToSettings.putExtra("toUnitText", toUnitText.getText());
-          switchToSettings.putExtra("fromUnitText", fromUnitText.getText());
-          switchToSettings.putExtra("currentCalc", currentCalc);
+  public boolean onOptionsItemSelected(MenuItem settingsItem) {
+    switch (settingsItem.getItemId()) {
+      case R.id.settings:
+        Intent switchToSettings = new Intent(MainActivity.this, Settings.class);
+        switchToSettings.putExtra("fromUnitTextSettings", fromUnitText.getText());
+        switchToSettings.putExtra("toUnitTextSettings", toUnitText.getText());
+        switchToSettings.putExtra("currentCalc", currentCalc);
 
-
-          startActivity(switchToSettings);
-      }
-      return super.onOptionsItemSelected(settingsItem);
+        startActivity(switchToSettings);
     }
+    return super.onOptionsItemSelected(settingsItem);
+  }
 }
-
-
