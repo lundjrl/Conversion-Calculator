@@ -2,31 +2,47 @@ package com.example.calculatorconversion;
 
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Calculator Conversion app by Zachary Thomas and James Lund
+ */
+
 public class Settings extends AppCompatActivity {
 
-  Spinner toSpinner;
   Spinner fromSpinner;
+  Spinner toSpinner;
 
-  TextView fromUnitText;
-  TextView toUnitText;
+  FloatingActionButton floatingActionButton;
+
+  TextView fromUnitTextSettings;
+  TextView toUnitTextSettings;
 
   ArrayList<String> lengthList;
   ArrayList<String> volumeList;
   ArrayAdapter<String> adapter;
 
-  String currentCalc;
   static final String VOLUME = "VOLUME";
   static final String LENGTH = "LENGTH";
+
+  String currentCalc;
+  String toSpinnerSelected;
+  String fromSpinnerSelected;
+  String initialFromTextUnit;
+  String initialToTextUnit;
+  int toTextSel;
+  int fromTextSel;
+
+  boolean firstRun = true;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,53 +55,86 @@ public class Settings extends AppCompatActivity {
     lengthList = new ArrayList<>(Arrays.asList("Yards", "Meters", "Miles"));
     volumeList = new ArrayList<>(Arrays.asList("Liters", "Gallons", "Quarts"));
 
-    toUnitText = findViewById(R.id.fromUnitText);
-    fromUnitText = findViewById(R.id.toUnitText);
-
-    toSpinner = findViewById(R.id.toSpinner);
     fromSpinner = findViewById(R.id.fromSpinner);
+    toSpinner = findViewById(R.id.toSpinner);
 
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//            R.array.vices, android.R.layout.simple_spinner_item);
-//
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                selection = (String) adapterView.getItemAtPosition(i);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+    floatingActionButton = findViewById(R.id.floatingActionButton);
 
+    toUnitTextSettings = findViewById(R.id.fromUnitTextSettings);
+    fromUnitTextSettings = findViewById(R.id.toUnitTextSettings);
+
+    // Start intent
     Intent payload = getIntent();
-    if (payload.hasExtra("fromUnitText")) {
-      fromUnitText.setText(payload.getStringExtra("fromUnitText"));
-    }
-    if (payload.hasExtra("toUnitText")) {
-      toUnitText.setText(payload.getStringExtra("toUnitText"));
-    }
     if (payload.hasExtra("currentCalc")) {
       currentCalc = payload.getStringExtra("currentCalc");
+    }
+    // Set text from intent
+    if (payload.hasExtra("fromUnitTextSettings")) {
+      initialFromTextUnit = payload.getStringExtra("fromUnitTextSettings");
+      fromUnitTextSettings.setText(initialFromTextUnit);
+    }
+    if (payload.hasExtra("toUnitTextSettings")) {
+      initialToTextUnit = payload.getStringExtra("toUnitTextSettings");
+      toUnitTextSettings.setText(initialToTextUnit);
     }
 
     switch (currentCalc) {
       case VOLUME:
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
             android.R.layout.simple_spinner_item, volumeList);
+        fromTextSel = volumeList.indexOf(initialToTextUnit);
+        toTextSel = volumeList.indexOf(initialFromTextUnit);
         break;
       case LENGTH:
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
             android.R.layout.simple_spinner_item, lengthList);
+        fromTextSel = lengthList.indexOf(initialToTextUnit);
+        toTextSel = lengthList.indexOf(initialFromTextUnit);
         break;
     }
 
     fromSpinner.setAdapter(adapter);
+    fromSpinner.setSelection(fromTextSel);
+
     toSpinner.setAdapter(adapter);
+    toSpinner.setSelection(toTextSel);
+
+    fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        fromSpinnerSelected = (String) adapterView.getItemAtPosition(i);
+        toUnitTextSettings.setText(fromSpinnerSelected);
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> adapterView) {
+
+      }
+    });
+
+    toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        toSpinnerSelected = (String) adapterView.getItemAtPosition(i);
+        fromUnitTextSettings.setText(toSpinnerSelected);
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> adapterView) {
+
+      }
+    });
+
+    floatingActionButton.setOnClickListener(e -> {
+      Intent switchToMain = new Intent(Settings.this, MainActivity.class);
+      switchToMain.putExtra("toUnitText", toUnitTextSettings.getText());
+      switchToMain.putExtra("fromUnitText", fromUnitTextSettings.getText());
+      switchToMain.putExtra("currentCalc", currentCalc);
+
+      setResult(MainActivity.SETTINGS, switchToMain);
+      finish();
+    });
 
   }
+
 }
